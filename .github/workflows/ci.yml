@@ -34,6 +34,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
+          images: |
+            ${{ env.REGISTRY }}/${{ github.repository }}
           labels: |
             org.opencontainers.image.title="ca-certs-on-the-fly"
             org.opencontainers.image.description="📜 Generate a ca-certificates.crt file on the fly"
