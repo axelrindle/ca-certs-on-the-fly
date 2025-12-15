@@ -33,4 +33,6 @@ RUN apk add --no-cache \
     touch /etc/ca-certificates.conf && \
     mkdir -p /etc/ca-certificates/update.d
 
+ENV CA_OUTPUT_DIR=/etc/ssl/certs
+
 CMD [ "sh", "/docker-entrypoint.sh" ]
