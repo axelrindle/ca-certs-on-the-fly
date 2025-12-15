@@ -3,7 +3,7 @@
 > 📜 Generate a ca-certificates.crt file on the fly
 
 Makes use of the debian [ca-certificates](https://salsa.debian.org/debian/ca-certificates) project
-to generate a combined
+to generate a combined `ca-certificates.crt` file.
 
 ## Usage
 
