@@ -1,9 +1,6 @@
 FROM alpine:3 AS setup
 
 RUN apk add --no-cache \
-        curl \
-        wget \
-        jq \
         git \
         make \
         python3 \
@@ -31,6 +28,9 @@ COPY --from=setup /usr/share/ca-certificates/mozilla/ /usr/local/share/ca-certif
 COPY rootfs /
 
 RUN apk add --no-cache \
+        curl \
+        wget \
+        jq \
         openssl \
         run-parts \
     && \
