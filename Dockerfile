@@ -1,10 +1,14 @@
 FROM alpine:3 AS setup
 
 RUN apk add --no-cache \
+        curl \
+        wget \
+        jq \
         git \
         make \
         python3 \
-        py3-cryptography && \
+        py3-cryptography \
+    && \
     apk del --no-cache \
         ca-certificates
 
