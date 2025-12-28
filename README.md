@@ -19,7 +19,7 @@ volume for consuming by other applications.
 docker run --name gen-ca-certs \
     --rm -it \
     -v ./ca-certificates:/usr/local/share/ca-certificates:ro \
-    axelrindle/ca-certs-on-the-fly
+    ghcr.io/axelrindle/ca-certs-on-the-fly
 ```
 
 ### Kubernetes
@@ -65,7 +65,7 @@ spec:
           emptyDir: {}
       initContainers:
       - name: gen-ca-certs
-        image: axelrindle/ca-certs-on-the-fly
+        image: ghcr.io/axelrindle/ca-certs-on-the-fly
         imagePullPolicy: Always
         volumeMounts:
           - name: kube-root-ca
