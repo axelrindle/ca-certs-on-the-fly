@@ -57,9 +57,13 @@ spec:
         - name: kube-root-ca
           configMap:
             name: kube-root-ca.crt
-        - name: ca-hooks
+        - name: ca-hooks-pre
           configMap:
-            name: gen-ca-certs-hooks
+            name: gen-ca-certs-hooks-pre
+            defaultMode: 0755
+        - name: ca-hooks-post
+          configMap:
+            name: gen-ca-certs-hooks-post
             defaultMode: 0755
         - name: ca-certificates
           emptyDir: {}
@@ -71,8 +75,11 @@ spec:
           - name: kube-root-ca
             mountPath: /usr/local/share/ca-certificates/custom
             readOnly: true
-          - name: ca-hooks
-            mountPath: /etc/ca-certificates/update.d
+          - name: ca-hooks-pre
+            mountPath: /etc/ca-certificates/pre-update.d
+            readOnly: true
+          - name: ca-hooks-post
+            mountPath: /etc/ca-certificates/post-update.d
             readOnly: true
           - name: ca-certificates
             mountPath: /mnt/ca-certificates
@@ -94,8 +101,10 @@ spec:
 
 ## Hooks
 
-Custom shell scripts and other executable files placed in `/etc/ca-certificates/update.d`
-will be run after a `ca-certificates.crt` has been generated.
+Custom shell scripts and other executable files can be placed in the following directories:
+
+- `/etc/ca-certificates/pre-update.d` run **BEFORE** generation
+- `/etc/ca-certificates/post-update.d` run **AFTER** generation
 
 ## License
 

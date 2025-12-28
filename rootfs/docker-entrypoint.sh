@@ -1,11 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
-set -ex
+set -e
+
+run_hooks() {
+  if [ -d "$1" ]
+  then
+    echo "Running hooks in $1..."
+
+    run-parts --verbose --exit-on-error "$1"
+
+    echo "done."
+  fi
+}
 
 TEMP_CERTS="/tmp/certs"
-HOOKS_DIR="/etc/ca-certificates/update.d"
+
+set -x
 
 mkdir -p "${TEMP_CERTS}"
+
+run_hooks "/etc/ca-certificates/pre-update.d"
 
 update-ca-certificates --fresh --verbose \
     --etccertsdir "${TEMP_CERTS}" \
@@ -16,11 +30,4 @@ mkdir -p "${CA_OUTPUT_DIR}"
 find "${TEMP_CERTS}" -type f -exec cp -Lpf {} "${CA_OUTPUT_DIR}" \;
 find "${TEMP_CERTS}" -type l -exec cp -Lpf {} "${CA_OUTPUT_DIR}" \;
 
-if [ -d "$HOOKS_DIR" ]
-then
-  echo "Running hooks in $HOOKS_DIR..."
-
-  run-parts --verbose --exit-on-error "$HOOKS_DIR"
-
-  echo "done."
-fi
+run_hooks "/etc/ca-certificates/post-update.d"
