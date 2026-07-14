@@ -13,7 +13,7 @@ RUN git clone https://salsa.debian.org/debian/ca-certificates.git /usr/local/src
 
 WORKDIR /usr/local/src/ca-certificates
 
-ARG GIT_COMMIT="ba3830faf6207f6444827209915dcfc4ce44b272"
+ARG GIT_COMMIT="0e5c792b46e3331aedcd27bfa49792abf98c5c76"
 
 RUN git checkout "${GIT_COMMIT}" && \
     make && \
